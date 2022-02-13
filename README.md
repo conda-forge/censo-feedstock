@@ -119,4 +119,5 @@ Feedstock Maintainers
 =====================
 
 * [@awvwgk](https://github.com/awvwgk/)
+* [@fabothch](https://github.com/fabothch/)
 
