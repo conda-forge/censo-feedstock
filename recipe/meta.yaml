@@ -1,46 +1,54 @@
 {% set name = "censo" %}
-{% set version = "1.2.0" %}
+{% set version = "2.1.1" %}
+{% set python_min = "3.10" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/grimme-lab/censo/archive/refs/tags/v.{{ version }}.tar.gz
-  sha256: f1d77d8eb9d25fe4157491a5d298321f84999123970411831b059cea39aecad2
+  url: https://github.com/grimme-lab/CENSO/releases/download/v2.1.2/censo-2.1.2.tar.gz
+  sha256: 3e031cd4d69f1ff9299b221d016ddd413c68b836b39400aa161e9e45ecdc8347
 
 build:
   number: 0
   entry_points:
-    - {{ name }} = censo_qm.censo:main
+    - censo = censo.cli.interface:entry_point
   script: {{ PYTHON }} -m pip install . -vv
   noarch: python
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
+    - setuptools
+    - setuptools_scm
   run:
-    - python >=3.6
+    - python >={{ python_min }}
     - xtb >=6.4.0
 
 test:
   imports:
-    - censo_qm
+    - censo
+    - censo.configuration
+    - censo.ensembledata
+    - censo.ensembleopt
+    - censo.params
+    - censo.properties
   commands:
     - pip check
-    - {{ name }} --help
+    - censo --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/grimme-lab/censo
   summary: Commandline energetic sorting of conformer rotamer ensembles
   doc_url: https://xtb-docs.readthedocs.io/en/latest/CENSO_docs/censo.html
-  license: LGPL-3.0-or-later
+  license: GPL-3.0-or-later
   license_file:
     - COPYING
-    - COPYING.LESSER
 
 extra:
   recipe-maintainers:
